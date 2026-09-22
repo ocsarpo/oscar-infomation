@@ -116,7 +116,7 @@ function initializeNaverMap() {
       });
     });
   } else {
-    setLocationStatus("GPS 도보 트랙을 불러오지 못했습니다. 네이버 지도 링크에서 경로를 확인해 주세요.");
+    setLocationStatus("도보 트랙을 불러오지 못했습니다. 네이버 지도 링크에서 경로를 확인해 주세요.");
   }
 
   locateButton.addEventListener("click", () => {
