@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#173d31" />
+    <meta name="description" content="가을시즌 한양도성 순성길 완주 스탬프투어 안내" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23173d31' d='M5 53 26 14l9 16 8-12 16 35Z'/%3E%3Cpath fill='%23e9a23b' d='m5 53 21-39 9 16 8-12 16 35Z' opacity='.55'/%3E%3C/svg%3E" />
+    <title>가을시즌 한양도성 순성길 완주</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="hero">
+        <p class="eyebrow">2026 AUTUMN · HANYANGDOSEONG</p>
+        <h1>한양도성 순성길<br /><em>완주 스탬프투어</em></h1>
+        <p class="hero-copy">성곽을 따라 걷고, 네 곳의 인증 지점을 모두 남기는 하루.</p>
+        <div class="event-summary" aria-label="행사 핵심 정보">
+          <div><span>일시</span><strong>10월 3일 토요일 · 09:00</strong></div>
+          <div><span>집결</span><strong>창의문</strong></div>
+          <div><span>예상</span><strong>9–10시간</strong></div>
+          <div><span>순환</span><strong>창의문 → 창의문</strong></div>
+        </div>
+      </header>
+
+      <section class="notice-card" aria-label="집결 정보">
+        <div class="notice-icon" aria-hidden="true">↗</div>
+        <div>
+          <p class="section-kicker">MEET UP</p>
+          <h2>오전 9시, 창의문에서 만나요</h2>
+          <p>경복궁역 3번 출구에서 7212 · 1020 · 7022번 버스 탑승 → <b>자하문고개·윤동주시인의언덕</b> 하차</p>
+        </div>
+      </section>
+
+      <section class="map-section" aria-labelledby="map-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">ROUTE MAP</p>
+            <h2 id="map-title">한 바퀴, 약 18km</h2>
+          </div>
+          <a class="map-link" href="https://naver.me/FnsjMN9V" target="_blank" rel="noopener noreferrer">네이버 지도 열기 <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="map-frame">
+          <iframe title="한양도성 순성길 네이버 지도" src="https://naver.me/FnsjMN9V" loading="lazy" referrerpolicy="no-referrer"></iframe>
+          <div class="map-fallback">
+            <span>지도가 보이지 않나요?</span>
+            <a href="https://naver.me/FnsjMN9V" target="_blank" rel="noopener noreferrer">네이버 지도에서 경로 보기</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="course-section" aria-labelledby="course-title">
+        <div class="section-heading stacked-mobile">
+          <div>
+            <p class="section-kicker">4 COURSE LOOP</p>
+            <h2 id="course-title">구간별 난이도와 합류 현황</h2>
+          </div>
+          <p class="hint">구간을 선택하면 해당 구간의 참여자가 표시됩니다.</p>
+        </div>
+        <div id="courseTabs" class="course-tabs" aria-label="코스 선택"></div>
+        <div id="courseDetails" class="course-detail" aria-live="polite"></div>
+      </section>
+
+      <section class="people-section" aria-labelledby="people-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">JOINING THE WALK</p>
+            <h2 id="people-title">참여자별 합류 구간</h2>
+          </div>
+          <p id="peopleCount" class="person-count"></p>
+        </div>
+        <div class="chart-legend" aria-label="그래프 안내"><span class="legend-fill"></span>합류 구간 <span class="legend-focus"></span>선택한 코스</div>
+        <div class="chart-scroll">
+          <div class="chart-axis" aria-hidden="true"><span>참여자</span><b>1코스</b><b>2코스</b><b>3코스</b><b>4코스</b></div>
+          <div id="peopleGrid" class="people-chart" aria-label="참여자별 합류 구간 막대그래프"></div>
+        </div>
+        <div class="pending-list">
+          <span>참여 구간 확인 중</span>
+          <strong>김재원? · 박경록? · 양선영?</strong>
+        </div>
+      </section>
+
+      <section class="two-column">
+        <article class="stamp-card">
+          <p class="section-kicker">STAMP CHECKPOINTS</p>
+          <h2>완주 인증을 위한<br />네 번의 기록</h2>
+          <ol class="checkpoints">
+            <li><span>01</span><div><strong>백악산 정상 표석</strong><small>1코스 · 북악산</small></div></li>
+            <li><span>02</span><div><strong>낙산공원 표지판</strong><small>2코스 · 낙산</small></div></li>
+            <li><span>03</span><div><strong>목멱산 봉수대 터</strong><small>3코스 · 남산</small></div></li>
+            <li><span>04</span><div><strong>인왕산 정상 표지판</strong><small>4코스 · 인왕산</small></div></li>
+          </ol>
+        </article>
+        <article class="packing-card">
+          <p class="section-kicker">PACKING LIST</p>
+          <h2>준비물 체크</h2>
+          <ul class="packing-list">
+            <li>생수 500ml 3병</li><li>트레킹화 <small>(운동화 가능)</small></li>
+            <li>행동식 · 물티슈 · 비닐봉지</li><li>보조배터리 · 수건</li>
+            <li>모자 · 썬크림 · 기능성 운동복</li>
+          </ul>
+          <div class="essential"><span aria-hidden="true">!</span><b>인왕산 야등을 위한<br />헤드랜턴 필수</b></div>
+        </article>
+      </section>
+
+      <footer>가을시즌 한양도성 순성길 · 안전하게, 함께 완주해요.</footer>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
