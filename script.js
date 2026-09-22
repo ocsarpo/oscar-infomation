@@ -60,3 +60,90 @@ function renderPeople() {
 
 function render() { renderTabs(); renderDetails(); renderPeople(); }
 render();
+
+const mapElement = document.querySelector("#naverMap");
+const locateButton = document.querySelector("#locateMe");
+const locationStatus = document.querySelector("#locationStatus");
+let userMarker;
+
+function setLocationStatus(message) {
+  locationStatus.textContent = message;
+}
+
+function initializeNaverMap() {
+  if (!window.naver || !window.naver.maps) {
+    setLocationStatus("지도를 불러오지 못했습니다. 네이버 지도 열기에서 경로를 확인해 주세요.");
+    return;
+  }
+
+  const naverMaps = window.naver.maps;
+  const changuimun = new naverMaps.LatLng(37.59245, 126.96672);
+  const map = new naverMaps.Map(mapElement, {
+    center: new naverMaps.LatLng(37.5755, 126.9875),
+    zoom: 13,
+    minZoom: 11,
+    zoomControl: true,
+    zoomControlOptions: { position: naverMaps.Position.TOP_RIGHT },
+  });
+
+  const gates = [
+    { name: "창의문", detail: "시작 · 완주", position: changuimun },
+    { name: "혜화문", detail: "1코스 끝 · 2코스 시작", position: new naverMaps.LatLng(37.58714, 127.00375) },
+    { name: "광희문", detail: "2코스 끝 · 3코스 시작", position: new naverMaps.LatLng(37.56404, 127.00962) },
+    { name: "숭례문", detail: "3코스 끝 · 4코스 시작", position: new naverMaps.LatLng(37.55998, 126.97528) },
+  ];
+
+  gates.forEach((gate) => {
+    const marker = new naverMaps.Marker({ map, position: gate.position, title: `${gate.name} · ${gate.detail}` });
+    const info = new naverMaps.InfoWindow({ content: `<div class="map-info"><strong>${gate.name}</strong><br><span>${gate.detail}</span></div>` });
+    naverMaps.Event.addListener(marker, "click", () => {
+      if (info.getMap()) info.close(); else info.open(map, marker);
+    });
+  });
+
+  // 도보 길찾기 데이터가 아닌, 각 구간의 산 능선을 잇는 대략적인 순성 흐름입니다.
+  const coursePath = [
+    changuimun, new naverMaps.LatLng(37.59622, 126.97767), new naverMaps.LatLng(37.59621, 126.99133),
+    new naverMaps.LatLng(37.59085, 126.99921), gates[1].position, new naverMaps.LatLng(37.58037, 127.00846),
+    new naverMaps.LatLng(37.57168, 127.00867), gates[2].position, new naverMaps.LatLng(37.55758, 127.00617),
+    new naverMaps.LatLng(37.55139, 126.99076), new naverMaps.LatLng(37.55522, 126.98143), gates[3].position,
+    new naverMaps.LatLng(37.56638, 126.96745), new naverMaps.LatLng(37.57743, 126.95952), new naverMaps.LatLng(37.58664, 126.95847), changuimun,
+  ];
+  new naverMaps.Polyline({ map, path: coursePath, strokeColor: "#e79a3e", strokeOpacity: 0.88, strokeWeight: 5, strokeLineCap: "round", strokeLineJoin: "round" });
+
+  locateButton.addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      setLocationStatus("이 기기에서는 현재 위치 기능을 지원하지 않습니다.");
+      return;
+    }
+    locateButton.disabled = true;
+    setLocationStatus("현재 위치를 확인하는 중입니다. 위치 권한을 허용해 주세요.");
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const currentPosition = new naverMaps.LatLng(position.coords.latitude, position.coords.longitude);
+        if (userMarker) userMarker.setPosition(currentPosition);
+        else userMarker = new naverMaps.Marker({
+          map,
+          position: currentPosition,
+          title: "현재 위치",
+          icon: { content: '<div class="current-location-dot" aria-label="현재 위치"></div>', anchor: new naverMaps.Point(10, 10) },
+        });
+        map.panTo(currentPosition);
+        locateButton.disabled = false;
+        setLocationStatus("현재 위치를 지도에 표시했습니다. 위치는 필요할 때 다시 확인할 수 있습니다.");
+      },
+      (error) => {
+        locateButton.disabled = false;
+        const errors = {
+          1: "위치 권한이 허용되지 않았습니다. 브라우저 설정에서 위치 권한을 허용한 뒤 다시 눌러 주세요.",
+          2: "현재 위치를 확인할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+          3: "위치 확인 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요.",
+        };
+        setLocationStatus(errors[error.code] || "현재 위치를 확인하지 못했습니다. 다시 시도해 주세요.");
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 },
+    );
+  });
+}
+
+initializeNaverMap();
