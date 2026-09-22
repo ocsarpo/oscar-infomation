@@ -80,7 +80,7 @@ function initializeNaverMap() {
   const changuimun = new naverMaps.LatLng(37.59245, 126.96672);
   const map = new naverMaps.Map(mapElement, {
     center: new naverMaps.LatLng(37.5755, 126.9875),
-    zoom: 13,
+    zoom: 12,
     minZoom: 11,
     zoomControl: true,
     zoomControlOptions: { position: naverMaps.Position.TOP_RIGHT },
@@ -101,15 +101,23 @@ function initializeNaverMap() {
     });
   });
 
-  // 도보 길찾기 데이터가 아닌, 각 구간의 산 능선을 잇는 대략적인 순성 흐름입니다.
-  const coursePath = [
-    changuimun, new naverMaps.LatLng(37.59622, 126.97767), new naverMaps.LatLng(37.59621, 126.99133),
-    new naverMaps.LatLng(37.59085, 126.99921), gates[1].position, new naverMaps.LatLng(37.58037, 127.00846),
-    new naverMaps.LatLng(37.57168, 127.00867), gates[2].position, new naverMaps.LatLng(37.55758, 127.00617),
-    new naverMaps.LatLng(37.55139, 126.99076), new naverMaps.LatLng(37.55522, 126.98143), gates[3].position,
-    new naverMaps.LatLng(37.56638, 126.96745), new naverMaps.LatLng(37.57743, 126.95952), new naverMaps.LatLng(37.58664, 126.95847), changuimun,
-  ];
-  new naverMaps.Polyline({ map, path: coursePath, strokeColor: "#e79a3e", strokeOpacity: 0.88, strokeWeight: 5, strokeLineCap: "round", strokeLineJoin: "round" });
+  const routeColors = ["#c45a38", "#d8952f", "#347663", "#356fa6"];
+  const routePaths = window.hanyangRouteSegments || [];
+  if (routePaths.length === 4) {
+    routePaths.forEach((segment, index) => {
+      new naverMaps.Polyline({
+        map,
+        path: segment.map(([latitude, longitude]) => new naverMaps.LatLng(latitude, longitude)),
+        strokeColor: routeColors[index],
+        strokeOpacity: 0.9,
+        strokeWeight: 5,
+        strokeLineCap: "round",
+        strokeLineJoin: "round",
+      });
+    });
+  } else {
+    setLocationStatus("GPS 도보 트랙을 불러오지 못했습니다. 네이버 지도 링크에서 경로를 확인해 주세요.");
+  }
 
   locateButton.addEventListener("click", () => {
     if (!navigator.geolocation) {
